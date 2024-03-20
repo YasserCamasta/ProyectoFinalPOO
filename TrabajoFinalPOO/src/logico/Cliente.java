@@ -2,7 +2,7 @@ package logico;
 
 public class Cliente {
 	
-	private String id;
+	private int id;
 	private String nombre;
 	
 
