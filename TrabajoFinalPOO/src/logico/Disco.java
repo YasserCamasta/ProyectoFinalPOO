@@ -1,34 +1,27 @@
 package logico;
 
-
 public class Disco extends Componente {
-    private String modelo;
-    private double capacidadGB;
-    private String tipoConexion;
+	private String modelo;
+	private double capacidadGB;
+	private String tipoConexion;
 
-    public Disco(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo, double capacidadGB, String tipoConexion) {
-        super(numeroSerie, precio, cantidadDisponible, marca); 
-        this.modelo = modelo;
-        this.capacidadGB = capacidadGB;
-        this.tipoConexion = tipoConexion;
-    }
+	public Disco(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
+			double capacidadGB, String tipoConexion) {
+		super(numeroSerie, precio, cantidadDisponible, marca);
+		this.modelo = modelo;
+		this.capacidadGB = capacidadGB;
+		this.tipoConexion = tipoConexion;
+	}
 
-   
+	public String toString() {
+		return "Disco{" + "marca='" + marca + '\'' + ", modelo='" + modelo + '\'' + ", capacidadGB=" + capacidadGB
+				+ ", tipoConexion='" + tipoConexion + '\'' + "} " + super.toString();
+	}
 
-    @Override
-    public String toString() {
-        return "Disco{" +
-                "marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", capacidadGB=" + capacidadGB +
-                ", tipoConexion='" + tipoConexion + '\'' +
-                "} " + super.toString();
-    }
+	public String tipoDeDisco() {
 
-    public String tipoDeDisco() {
-        
-        return this.tipoConexion.equalsIgnoreCase("SATA3") ? "SSD" : "HDD";
-    }
+		return this.tipoConexion.equalsIgnoreCase("SATA3") ? "SSD" : "HDD";
+	}
 
 	public String getMarca() {
 		return marca;
@@ -62,4 +55,3 @@ public class Disco extends Componente {
 		this.tipoConexion = tipoConexion;
 	}
 }
-

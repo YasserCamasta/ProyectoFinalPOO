@@ -4,39 +4,33 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Motherboard extends Componente {
-    private String modelo;
-    private String socket;
-    private String tipoMemoriaRAM;
-    private List<String> conexionesDiscos;
+	private String modelo;
+	private String socket;
+	private String tipoMemoriaRAM;
+	private List<String> conexionesDiscos;
 
-    public Motherboard(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo, String socket, String tipoMemoriaRAM) {
-        super(numeroSerie, precio, cantidadDisponible, marca);
-        this.modelo = modelo;
-        this.socket = socket;
-        this.tipoMemoriaRAM = tipoMemoriaRAM;
-        this.conexionesDiscos = new ArrayList<>();
-    }
+	public Motherboard(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
+			String socket, String tipoMemoriaRAM) {
+		super(numeroSerie, precio, cantidadDisponible, marca);
+		this.modelo = modelo;
+		this.socket = socket;
+		this.tipoMemoriaRAM = tipoMemoriaRAM;
+		this.conexionesDiscos = new ArrayList<>();
+	}
 
-  
+	public String toString() {
+		return "Motherboard{" + "marca='" + marca + '\'' + ", modelo='" + modelo + '\'' + ", socket='" + socket + '\''
+				+ ", tipoMemoriaRAM='" + tipoMemoriaRAM + '\'' + ", conexionesDiscos=" + conexionesDiscos + "} "
+				+ super.toString();
+	}
 
-    @Override
-    public String toString() {
-        return "Motherboard{" +
-                "marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", socket='" + socket + '\'' +
-                ", tipoMemoriaRAM='" + tipoMemoriaRAM + '\'' +
-                ", conexionesDiscos=" + conexionesDiscos +
-                "} " + super.toString();
-    }
+	public boolean esCompatibleConRAM(Ram ram) {
+		return this.tipoMemoriaRAM.equalsIgnoreCase(ram.getTipoMemoria());
+	}
 
-    public boolean esCompatibleConRAM(Ram ram) {
-        return this.tipoMemoriaRAM.equalsIgnoreCase(ram.getTipoMemoria());
-    }
-
-    public boolean tieneConexionParaDisco(Disco disco) {
-        return this.conexionesDiscos.contains(disco.getTipoConexion());
-    }
+	public boolean tieneConexionParaDisco(Disco disco) {
+		return this.conexionesDiscos.contains(disco.getTipoConexion());
+	}
 
 	public String getMarca() {
 		return marca;
