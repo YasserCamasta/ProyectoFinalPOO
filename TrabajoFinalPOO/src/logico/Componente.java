@@ -11,10 +11,10 @@ public abstract class Componente {
 	protected String marca;
 	protected static List<Componente> componentes = new ArrayList<>();
 
-	public Componente(String numeroSerie, double precio, int cantidadDisponible, String marca) {
+	public Componente(String numeroSerie,String marca) {
 		this.numeroSerie = numeroSerie;
-		this.precio = precio;
-		this.cantidadDisponible = cantidadDisponible;
+		this.precio = 0;
+		this.cantidadDisponible = 0;
 		this.marca = marca;
 		componentes.add(this);
 	}

@@ -9,7 +9,7 @@ public class Micro extends Componente {
 	public Micro(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
 			String tipoConexion, double velocidadProcesamiento) {
 
-		super(numeroSerie, precio, cantidadDisponible, marca);
+		super(numeroSerie, marca);
 		this.modelo = modelo;
 		this.tipoConexion = tipoConexion;
 		this.velocidadProcesamiento = velocidadProcesamiento;

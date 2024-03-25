@@ -11,7 +11,7 @@ public class Motherboard extends Componente {
 
 	public Motherboard(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
 			String socket, String tipoMemoriaRAM) {
-		super(numeroSerie, precio, cantidadDisponible, marca);
+		super(numeroSerie, marca);
 		this.modelo = modelo;
 		this.socket = socket;
 		this.tipoMemoriaRAM = tipoMemoriaRAM;

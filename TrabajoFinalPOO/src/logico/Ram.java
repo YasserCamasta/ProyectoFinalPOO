@@ -8,7 +8,7 @@ public class Ram extends Componente {
 
 	public Ram(String numeroSerie, double precio, int cantidadDisponible, String marca, double memoriaGB,
 			String tipoMemoria, double frecuencia) {
-		super(numeroSerie, precio, cantidadDisponible, marca);
+		super(numeroSerie, marca);
 		this.memoriaGB = memoriaGB;
 		this.tipoMemoria = tipoMemoria;
 		this.frecuencia = frecuencia;

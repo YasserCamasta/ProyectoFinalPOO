@@ -7,7 +7,7 @@ public class Disco extends Componente {
 
 	public Disco(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
 			double capacidadGB, String tipoConexion) {
-		super(numeroSerie, precio, cantidadDisponible, marca);
+		super(numeroSerie, marca);
 		this.modelo = modelo;
 		this.capacidadGB = capacidadGB;
 		this.tipoConexion = tipoConexion;
