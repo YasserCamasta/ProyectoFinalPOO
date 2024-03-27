@@ -1,57 +1,41 @@
 package logico;
 
-public class Ram extends Componente {
+class RAM extends Componente {
+    private String marca;
+    private int capacidad;
+    private String tipo;
+    
+    public RAM(String numeroSerie, double precio, int cantidadDisponible, String marca, int capacidad, String tipo) {
+        super(numeroSerie, precio, cantidadDisponible);
+        this.marca = marca;
+        this.capacidad = capacidad;
+        this.tipo = tipo;
+    }
+    public String getMarca() {
+        return marca;
+    }
 
-	private double memoriaGB;
-	private String tipoMemoria;
-	private double frecuencia;
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
 
-	public Ram(String numeroSerie, double precio, int cantidadDisponible, String marca, double memoriaGB,
-			String tipoMemoria, double frecuencia) {
-		super(numeroSerie, marca);
-		this.memoriaGB = memoriaGB;
-		this.tipoMemoria = tipoMemoria;
-		this.frecuencia = frecuencia;
-	}
+    public int getCapacidad() {
+        return capacidad;
+    }
 
-	public String toString() {
-		return "Ram{" + "marca='" + marca + '\'' + ", memoriaGB=" + memoriaGB + ", tipoMemoria='" + tipoMemoria + '\''
-				+ ", frecuencia=" + frecuencia + "} " + super.toString();
-	}
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
 
-	public boolean esCompatibleConFrecuencia(double frecuencia) {
-		return this.frecuencia <= frecuencia;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public double getMemoriaGB() {
-		return memoriaGB;
-	}
-
-	public void setMemoriaGB(double memoriaGB) {
-		this.memoriaGB = memoriaGB;
-	}
-
-	public String getTipoMemoria() {
-		return tipoMemoria;
-	}
-
-	public void setTipoMemoria(String tipoMemoria) {
-		this.tipoMemoria = tipoMemoria;
-	}
-
-	public double getFrecuencia() {
-		return frecuencia;
-	}
-
-	public void setFrecuencia(double frecuencia) {
-		this.frecuencia = frecuencia;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    public String obtenerDetalles() {
+        return "Memoria RAM: " + marca + ", Capacidad: " + capacidad + " GB, Tipo: " + tipo;
+    }
 }

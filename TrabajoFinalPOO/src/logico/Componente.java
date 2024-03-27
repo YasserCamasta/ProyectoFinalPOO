@@ -1,53 +1,14 @@
 package logico;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public abstract class Componente {
-	protected String numeroSerie;
-	protected double precio;
-	protected int cantidadDisponible;
-	protected String marca;
-	protected static List<Componente> componentes = new ArrayList<>();
+	private String numeroSerie;
+	private double precio;
+	private int cantidadDisponible;
 
-	public Componente(String numeroSerie,String marca) {
+	public Componente(String numeroSerie, double precio, int cantidadDisponible) {
 		this.numeroSerie = numeroSerie;
-		this.precio = 0;
-		this.cantidadDisponible = 0;
-		this.marca = marca;
-		componentes.add(this);
-	}
-
-	public static void mostrarComponentes() {
-		for (Componente componente : componentes) {
-			System.out.println(componente);
-		}
-	}
-
-	public String toString() {
-		return "Componente{" + "numeroSerie='" + numeroSerie + '\'' + ", precio=" + precio + ", cantidadDisponible="
-				+ cantidadDisponible + ", marca='" + marca + '\'' + '}';
-	}
-
-	public void actualizarInventario(int cantidad) {
-		this.cantidadDisponible += cantidad;
-	}
-
-	public boolean estaDisponible() {
-		return this.cantidadDisponible > 0;
-	}
-
-	public static List<Componente> buscarPorMarca(String marca) {
-		return componentes.stream().filter(c -> c.marca.equalsIgnoreCase(marca)).collect(Collectors.toList());
-	}
-
-	public static int compararPorPrecio(Componente c1, Componente c2) {
-		return Double.compare(c1.precio, c2.precio);
-	}
-
-	public static boolean sonCompatibles(Componente c1, Componente c2) {
-		return c1.marca.equals(c2.marca);
+		this.precio = precio;
+		this.cantidadDisponible = cantidadDisponible;
 	}
 
 	public String getNumeroSerie() {
@@ -74,11 +35,5 @@ public abstract class Componente {
 		this.cantidadDisponible = cantidadDisponible;
 	}
 
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+	public abstract String obtenerDetalles();
 }

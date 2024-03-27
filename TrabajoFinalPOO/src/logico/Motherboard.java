@@ -1,74 +1,64 @@
 package logico;
 
-import java.util.List;
 import java.util.ArrayList;
 
-public class Motherboard extends Componente {
-	private String modelo;
-	private String socket;
-	private String tipoMemoriaRAM;
-	private List<String> conexionesDiscos;
+class Motherboard extends Componente {
+    private String marca;
+    private String modelo;
+    private String tipoSocket;
+    private String tipoMemoria;
+    private ArrayList<String> conexionesHDD;
+    
+    public Motherboard(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
+                       String tipoSocket, String tipoMemoria, ArrayList<String> conexionesHDD) {
+        super(numeroSerie, precio, cantidadDisponible);
+        this.marca = marca;
+        this.modelo = modelo;
+        this.tipoSocket = tipoSocket;
+        this.tipoMemoria = tipoMemoria;
+        this.conexionesHDD = conexionesHDD;
+    }
+    
+    public String getMarca() {
+        return marca;
+    }
 
-	public Motherboard(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
-			String socket, String tipoMemoriaRAM) {
-		super(numeroSerie, marca);
-		this.modelo = modelo;
-		this.socket = socket;
-		this.tipoMemoriaRAM = tipoMemoriaRAM;
-		this.conexionesDiscos = new ArrayList<>();
-	}
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
 
-	public String toString() {
-		return "Motherboard{" + "marca='" + marca + '\'' + ", modelo='" + modelo + '\'' + ", socket='" + socket + '\''
-				+ ", tipoMemoriaRAM='" + tipoMemoriaRAM + '\'' + ", conexionesDiscos=" + conexionesDiscos + "} "
-				+ super.toString();
-	}
+    public String getModelo() {
+        return modelo;
+    }
 
-	public boolean esCompatibleConRAM(Ram ram) {
-		return this.tipoMemoriaRAM.equalsIgnoreCase(ram.getTipoMemoria());
-	}
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
 
-	public boolean tieneConexionParaDisco(Disco disco) {
-		return this.conexionesDiscos.contains(disco.getTipoConexion());
-	}
+    public String getTipoSocket() {
+        return tipoSocket;
+        }
+        		 public void setTipoSocket(String tipoSocket) {
+            this.tipoSocket = tipoSocket;
+        }
 
-	public String getMarca() {
-		return marca;
-	}
+        public String getTipoMemoria() {
+            return tipoMemoria;
+        }
 
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+        public void setTipoMemoria(String tipoMemoria) {
+            this.tipoMemoria = tipoMemoria;
+        }
 
-	public String getModelo() {
-		return modelo;
-	}
+        public ArrayList<String> getConexionesHDD() {
+            return conexionesHDD;
+        }
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-
-	public String getSocket() {
-		return socket;
-	}
-
-	public void setSocket(String socket) {
-		this.socket = socket;
-	}
-
-	public String getTipoMemoriaRAM() {
-		return tipoMemoriaRAM;
-	}
-
-	public void setTipoMemoriaRAM(String tipoMemoriaRAM) {
-		this.tipoMemoriaRAM = tipoMemoriaRAM;
-	}
-
-	public List<String> getConexionesDiscos() {
-		return conexionesDiscos;
-	}
-
-	public void setConexionesDiscos(List<String> conexionesDiscos) {
-		this.conexionesDiscos = conexionesDiscos;
-	}
-}
+        public void setConexionesHDD(ArrayList<String> conexionesHDD) {
+            this.conexionesHDD = conexionesHDD;
+        }
+        public String obtenerDetalles() {
+            return "Tarjeta Madre: " + marca + " " + modelo + ", Socket: " + tipoSocket +
+                    ", Tipo de Memoria: " + tipoMemoria + ", Conexiones HDD: " + conexionesHDD.toString();
+        }
+    }
