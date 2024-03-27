@@ -2,7 +2,7 @@ package logico;
 
 import java.util.ArrayList;
 
-public class Factura {
+class Factura {
     private int numeroFactura;
     private Cliente cliente;
     private ArrayList<Componente> componentes;
@@ -12,7 +12,7 @@ public class Factura {
         this.cliente = cliente;
         componentes = new ArrayList<>();
     }
-    
+
     public int getNumeroFactura() {
         return numeroFactura;
     }
