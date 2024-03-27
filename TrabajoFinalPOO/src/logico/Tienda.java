@@ -14,8 +14,7 @@ public class Tienda {
         facturas = new ArrayList<>();
         combos = new ArrayList<>();
     }
-
-    // Getters y setters
+    
     public ArrayList<Componente> getInventario() {
         return inventario;
     }
@@ -48,7 +47,6 @@ public class Tienda {
         this.combos = combos;
     }
 
-    // Métodos para agregar elementos
     public void agregarComponente(Componente componente) {
         inventario.add(componente);
     }
