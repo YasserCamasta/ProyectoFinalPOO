@@ -1,16 +1,16 @@
 package logico;
 
-class Micro extends Componente {
+public class Micro extends Componente {
     private String modelo;
     private String tipoSocket;
     private double velocidadProcesamiento;
 
-    public Micro(String numeroSerie, double precio, int cantidadDisponible, String marca, String modelo,
-                 String tipoSocket, double velocidadProcesamiento) {
-        super(numeroSerie, precio, cantidadDisponible, marca);
+    public Micro(String numeroSerie, String marca, String modelo, String tipoSocket, double velocidadProcesamiento) {
+        super(numeroSerie, marca); 
         this.modelo = modelo;
         this.tipoSocket = tipoSocket;
         this.velocidadProcesamiento = velocidadProcesamiento;
+        this.precio = 1500.0;
     }
 
     public String getModelo() {
@@ -37,6 +37,7 @@ class Micro extends Componente {
         this.velocidadProcesamiento = velocidadProcesamiento;
     }
 
+    
     public String obtenerDetalles() {
         return "Microprocesador: " + getMarca() + " " + modelo + ", Socket: " + tipoSocket +
                 ", Velocidad: " + velocidadProcesamiento + " GHz";

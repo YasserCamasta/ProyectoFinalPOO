@@ -1,21 +1,32 @@
 package logico;
 
-class Disco extends Componente {
-    private int capacidad;
+public class Disco extends Componente {
+    private String modelo;
+    private double capacidadGB;
     private String tipoConexion;
 
-    public Disco(String numeroSerie, double precio, int cantidadDisponible, String marca, int capacidad, String tipoConexion) {
-        super(numeroSerie, precio, cantidadDisponible, marca);
-        this.capacidad = capacidad;
+    public Disco(String numeroSerie, String marca, String modelo, double capacidadGB, String tipoConexion) {
+        super(numeroSerie, marca); // Llamamos al constructor de la clase padre
+        this.modelo = modelo;
+        this.capacidadGB = capacidadGB;
         this.tipoConexion = tipoConexion;
+        this.precio = 2000.0;
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public double getCapacidadGB() {
+        return capacidadGB;
+    }
+
+    public void setCapacidadGB(double capacidadGB) {
+        this.capacidadGB = capacidadGB;
     }
 
     public String getTipoConexion() {
@@ -26,7 +37,12 @@ class Disco extends Componente {
         this.tipoConexion = tipoConexion;
     }
 
+    public String tipoDeDisco() {
+        return "Tipo de Disco: " + tipoConexion;
+    }
+
+    
     public String obtenerDetalles() {
-        return "Disco Duro: " + getMarca() + ", Capacidad: " + capacidad + " GB, Conexión: " + tipoConexion;
+        return "Disco Duro: " + getMarca() + ", Modelo: " + modelo + ", Capacidad: " + capacidadGB + " GB, Tipo de Conexión: " + tipoConexion;
     }
 }

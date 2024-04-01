@@ -1,21 +1,22 @@
 package logico;
 
-class RAM extends Componente {
-    private int capacidad;
+public class Ram extends Componente {
+    private int capacidadGB;
     private String tipo;
 
-    public RAM(String numeroSerie, double precio, int cantidadDisponible, String marca, int capacidad, String tipo) {
-        super(numeroSerie, precio, cantidadDisponible, marca);
-        this.capacidad = capacidad;
+    public Ram(String numeroSerie, String marca, int capacidadGB, String tipo) {
+        super(numeroSerie, marca); 
+        this.capacidadGB = capacidadGB;
         this.tipo = tipo;
+        this.precio = 2000.0;
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    public int getCapacidadGB() {
+        return capacidadGB;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void setCapacidadGB(int capacidadGB) {
+        this.capacidadGB = capacidadGB;
     }
 
     public String getTipo() {
@@ -26,7 +27,9 @@ class RAM extends Componente {
         this.tipo = tipo;
     }
 
+    
     public String obtenerDetalles() {
-        return "Memoria RAM: " + getMarca() + ", Capacidad: " + capacidad + " GB, Tipo: " + tipo;
+        return "Memoria RAM: " + getMarca() + ", Capacidad: " + capacidadGB + " GB, Tipo: " + tipo;
     }
+
 }

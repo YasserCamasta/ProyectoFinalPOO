@@ -1,49 +1,61 @@
 package logico;
 
-public abstract class Componente {
-    private String numeroSerie;
-    private double precio;
-    private int cantidadDisponible;
-    private String marca;
+import java.util.ArrayList;
 
-    public Componente(String numeroSerie, double precio, int cantidadDisponible, String marca) {
+public abstract class Componente {
+    protected String numeroSerie;
+    protected double precio;
+    protected int cantidadDisponible;
+    protected String marca;
+
+    public Componente(String numeroSerie, String marca) {
         this.numeroSerie = numeroSerie;
-        this.precio = precio;
-        this.cantidadDisponible = cantidadDisponible;
+        this.precio = 0;
         this.marca = marca;
+        this.cantidadDisponible = 0; // Inicializamos la cantidad disponible a 0
     }
 
     public String getNumeroSerie() {
         return numeroSerie;
     }
 
-    public void setNumeroSerie(String numeroSerie) {
-        this.numeroSerie = numeroSerie;
-    }
-
     public double getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
     }
 
     public int getCantidadDisponible() {
         return cantidadDisponible;
     }
 
-    public void setCantidadDisponible(int cantidadDisponible) {
-        this.cantidadDisponible = cantidadDisponible;
-    }
-
     public String getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void actualizarInventario(int cantidad) {
+        cantidadDisponible += cantidad;
+    }
+
+    public boolean estaDisponible() {
+        return cantidadDisponible > 0;
     }
 
     public abstract String obtenerDetalles();
+
+    public static int compararPorPrecio(Componente c1, Componente c2) {
+        return Double.compare(c1.getPrecio(), c2.getPrecio());
+    }
+
+    public static boolean sonCompatibles(Componente c1, Componente c2) {
+        return c1.getClass().equals(c2.getClass());
+    }
+
+    public static ArrayList<Componente> buscarPorMarca(ArrayList<Componente> lista, String marca) {
+        ArrayList<Componente> componentesPorMarca = new ArrayList<>();
+        for (Componente componente : lista) {
+            if (componente.getMarca().equalsIgnoreCase(marca)) {
+                componentesPorMarca.add(componente);
+            }
+        }
+        return componentesPorMarca;
+    }
 }
