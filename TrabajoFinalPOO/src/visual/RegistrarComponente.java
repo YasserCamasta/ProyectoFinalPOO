@@ -180,7 +180,7 @@ public class RegistrarComponente extends JDialog {
         JButton okButton = new JButton("Guardar");
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Obtener los datos ingresados por el usuario
+                // Obtener los datos ingresados por el usuari
                 String numeroSerie = textFieldNumeroSerie.getText().trim();
                 String marca = textFieldMarca.getText().trim();
                 String modelo = textFieldModelo.getText().trim();

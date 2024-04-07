@@ -58,4 +58,9 @@ public abstract class Componente {
         }
         return componentesPorMarca;
     }
+
+    
+    public String toString() {
+        return getClass().getSimpleName() + " - " + numeroSerie + " (" + marca + ")"; // Devolver el nombre del componente y su número de serie
+    }
 }

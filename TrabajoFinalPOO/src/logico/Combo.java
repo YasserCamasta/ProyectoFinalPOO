@@ -3,7 +3,7 @@ package logico;
 import java.util.ArrayList;
 
 public class Combo {
-    private static final double DESCUENTO_COMBO = 0.1; // Descuento del 10% para los combos
+    public static final double DESCUENTO_COMBO = 0.1; // Descuento del 10% para los combos
     private static int contadorCombos = 0; // Contador para generar ids únicos para cada combo
     private int idCombo;
     private ArrayList<Componente> componentes;

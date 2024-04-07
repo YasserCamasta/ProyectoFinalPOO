@@ -8,11 +8,13 @@ public class Factura {
     private int numeroFactura;
     private Cliente cliente;
     private ArrayList<Componente> componentes;
+    private double totalVenta;
 
     public Factura(Cliente cliente) {
         this.numeroFactura = ++contadorFacturas;
         this.cliente = cliente;
         this.componentes = new ArrayList<>();
+        this.totalVenta = 0;
     }
 
     public Factura(Cliente cliente, List<Componente> componentes) {
@@ -36,7 +38,15 @@ public class Factura {
         this.cliente = cliente;
     }
 
-    public ArrayList<Componente> getComponentes() {
+    public double getTotalVenta() {
+		return totalVenta;
+	}
+
+	public void setTotalVenta(double totalVenta) {
+		this.totalVenta = totalVenta;
+	}
+
+	public ArrayList<Componente> getComponentes() {
         return componentes;
     }
 

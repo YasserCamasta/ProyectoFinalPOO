@@ -55,4 +55,9 @@ public class Cliente {
         }
         return componentesComprados;
     }
+
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

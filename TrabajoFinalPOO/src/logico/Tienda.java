@@ -80,6 +80,14 @@ public class Tienda {
         // Por ahora, simplemente retornaremos true para evitar errores
         return true;
     }
+    public Cliente buscarClientePorNombre(String nombreCliente) {
+        for (Cliente cliente : Tienda.getInstance().getClientes()) {
+            if (cliente.getNombre().equalsIgnoreCase(nombreCliente)) {
+                return cliente;
+            }
+        }
+        return null; // Retorna null si no se encuentra ningún cliente con el nombre dado
+    }
 
     // Getters y setters
     public ArrayList<Componente> getInventario() {
