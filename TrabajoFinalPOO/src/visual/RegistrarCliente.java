@@ -27,6 +27,7 @@ public class RegistrarCliente extends JDialog {
      * Create the dialog.
      */
     public RegistrarCliente() {
+    	setTitle("Registro de Cliente");
         setBounds(100, 100, 450, 250);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));

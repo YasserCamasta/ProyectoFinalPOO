@@ -17,19 +17,30 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import logico.Cliente;
 import logico.Componente;
 import logico.Factura;
 import logico.Tienda;
+import logico.Motherboard;
+import logico.Disco;
+import logico.Micro;
+import logico.Ram;
 
 public class MainFrame extends JFrame {
 
     private JPanel contentPane;
-    private JList<String> listado;
-    private DefaultListModel<String> listModel;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    private JButton btnEliminar;
+    private Object[] rowData;
+    private int selectedRowIndex = -1;
 
     /**
      * Launch the application.
@@ -54,7 +65,7 @@ public class MainFrame extends JFrame {
         setTitle("Menú Principal");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 800, 400);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -86,33 +97,32 @@ public class MainFrame extends JFrame {
         });
         mnListar.add(mntmListarFacturas);
 
-
         JMenu mnRegistrar = new JMenu("Registrar");
         menuBar.add(mnRegistrar);
 
         JMenuItem mntmRegistrarCliente = new JMenuItem("Cliente");
         mntmRegistrarCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                abrirDialogoRegistrarCliente();
+                abrirFormulario(new RegistrarCliente());
             }
         });
         mnRegistrar.add(mntmRegistrarCliente);
 
-        JMenuItem mntmRegistrarVenta = new JMenuItem("Venta");
-        mntmRegistrarVenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Implementar...
-            }
-        });
-        mnRegistrar.add(mntmRegistrarVenta);
-
         JMenuItem mntmRegistrarComponente = new JMenuItem("Componente");
         mntmRegistrarComponente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                abrirDialogoRegistrarComponente();
+                abrirFormulario(new RegistrarComponente());
             }
         });
         mnRegistrar.add(mntmRegistrarComponente);
+
+        JMenuItem mntmRegistrarVenta = new JMenuItem("Venta");
+        mntmRegistrarVenta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                abrirFormulario(new RegistrarVenta());
+            }
+        });
+        mnRegistrar.add(mntmRegistrarVenta);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -126,22 +136,24 @@ public class MainFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane();
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        listModel = new DefaultListModel<>();
-        listado = new JList<>(listModel);
-        listado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listado.setLayoutOrientation(JList.VERTICAL);
-        scrollPane.setViewportView(listado);
-
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                eliminarRegistro();
-            }
-        });
-        panel.add(btnEliminar, BorderLayout.SOUTH);
+        tableModel = new DefaultTableModel();
+        table = new JTable(tableModel);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane.setViewportView(table);
 
         JPanel panelBotones = new JPanel();
         contentPane.add(panelBotones, BorderLayout.SOUTH);
+
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (selectedRowIndex != -1) {
+                    eliminarRegistro();
+                }
+            }
+        });
+        panelBotones.add(btnEliminar);
 
         JButton btnSalir = new JButton("Salir");
         btnSalir.addActionListener(new ActionListener() {
@@ -160,72 +172,139 @@ public class MainFrame extends JFrame {
         panelBotones.add(btnResetearListado);
     }
 
+    private void abrirFormulario(JDialog frame) {
+        frame.setVisible(true);
+    }
+
     private void mostrarListadoComponentes() {
-        listModel.clear(); // Limpiamos el modelo de la lista
+        tableModel.setColumnCount(0); // Limpiamos las columnas
+        tableModel.setRowCount(0); // Limpiamos las filas
+
+        // Definimos las columnas de la tabla para los componentes
+        tableModel.addColumn("Número de Serie");
+        tableModel.addColumn("Precio");
+        tableModel.addColumn("Cantidad Disponible");
+        tableModel.addColumn("Marca");
 
         // Obtenemos la lista de componentes del inventario de la tienda
         ArrayList<Componente> componentes = Tienda.getInstance().getInventario();
 
-        // Iteramos sobre la lista de componentes y los agregamos al modelo de la lista
+        // Iteramos sobre la lista de componentes y agregamos los datos a la tabla
         for (Componente componente : componentes) {
-            listModel.addElement(componente.obtenerDetalles());
+            if (componente instanceof Disco) {
+                rowData = new Object[]{
+                        componente.getNumeroSerie(),
+                        componente.getPrecio(),
+                        componente.getCantidadDisponible(),
+                        componente.getMarca(),
+                        ((Disco) componente).getModelo(),
+                        ((Disco) componente).getCapacidadGB(),
+                        ((Disco) componente).getTipoConexion()
+                };
+            } else if (componente instanceof Micro) {
+                rowData = new Object[]{
+                        componente.getNumeroSerie(),
+                        componente.getPrecio(),
+                        componente.getCantidadDisponible(),
+                        componente.getMarca(),
+                        ((Micro) componente).getModelo(),
+                        ((Micro) componente).getTipoSocket(),
+                        ((Micro) componente).getVelocidadProcesamiento()
+                };
+            } else if (componente instanceof Motherboard) {
+                rowData = new Object[]{
+                        componente.getNumeroSerie(),
+                        componente.getPrecio(),
+                        componente.getCantidadDisponible(),
+                        componente.getMarca(),
+                        ((Motherboard) componente).getModelo(),
+                        ((Motherboard) componente).getSocket(),
+                        ((Motherboard) componente).getTipoMemoriaRAM(),
+                        ((Motherboard) componente).getConexionesDiscos()
+                };
+            } else if (componente instanceof Ram) {
+                rowData = new Object[]{
+                        componente.getNumeroSerie(),
+                        componente.getPrecio(),
+                        componente.getCantidadDisponible(),
+                        componente.getMarca(),
+                        ((Ram) componente).getCapacidadGB(),
+                        ((Ram) componente).getTipo()
+                };
+            }
+            tableModel.addRow(rowData);
         }
+
+        // Desactivamos los botones de eliminar
+        btnEliminar.setEnabled(false);
     }
+
     private void mostrarListadoClientes() {
-        listModel.clear(); // Limpiamos el modelo de la lista
+        tableModel.setColumnCount(0); // Limpiamos las columnas
+        tableModel.setRowCount(0); // Limpiamos las filas
+
+        // Definimos las columnas de la tabla para los clientes
+        tableModel.addColumn("Nombre");
+        tableModel.addColumn("Dirección");
+        tableModel.addColumn("Teléfono");
 
         // Obtenemos la lista de clientes de la tienda
         ArrayList<Cliente> clientes = Tienda.getInstance().getClientes();
 
-        // Iteramos sobre la lista de clientes y agregamos sus nombres al modelo de la lista
+        // Iteramos sobre la lista de clientes y agregamos los datos a la tabla
         for (Cliente cliente : clientes) {
-            listModel.addElement(cliente.getNombre());
+            rowData = new Object[]{
+                    cliente.getNombre(),
+                    cliente.getDireccion(),
+                    cliente.getTelefono()
+            };
+            tableModel.addRow(rowData);
         }
+
+        // Desactivamos los botones de eliminar
+        btnEliminar.setEnabled(false);
     }
 
     private void mostrarListadoFacturas() {
-        listModel.clear(); // Limpiamos el modelo de la lista
+        tableModel.setColumnCount(0); // Limpiamos las columnas
+        tableModel.setRowCount(0); // Limpiamos las filas
+
+        // Definimos las columnas de la tabla para las facturas
+        tableModel.addColumn("Número de Factura");
+        tableModel.addColumn("Cliente");
+        tableModel.addColumn("Total");
+        tableModel.addColumn("Componentes");
 
         // Obtenemos la lista de facturas de la tienda
         ArrayList<Factura> facturas = Tienda.getInstance().getFacturas();
 
-        // Iteramos sobre la lista de facturas y agregamos los números de factura al modelo de la lista
+        // Iteramos sobre la lista de facturas y agregamos los datos a la tabla
         for (Factura factura : facturas) {
-            listModel.addElement(String.valueOf(factura.getNumeroFactura()));
+            rowData = new Object[]{
+                    factura.getNumeroFactura(),
+                    factura.getCliente().getNombre(),
+                    factura.calcularTotalConDescuento(),
+                    factura.getComponentes()
+            };
+            tableModel.addRow(rowData);
         }
-    }
 
-    private void abrirDialogoRegistrarCliente() {
-        // Mensaje de confirmación
-        JOptionPane.showMessageDialog(this, "Abriendo menú para registrar cliente", "Registrar Cliente",
-                JOptionPane.INFORMATION_MESSAGE);
-        
-        // Abrir el diálogo modal para registrar un cliente
-        RegistrarCliente dialogoRegistrarCliente = new RegistrarCliente();
-        dialogoRegistrarCliente.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialogoRegistrarCliente.setVisible(true);
-    }
-
-    private void abrirDialogoRegistrarComponente() {
-        // Mensaje de confirmación
-        JOptionPane.showMessageDialog(this, "Abriendo menú para registrar componente", "Registrar Componente",
-                JOptionPane.INFORMATION_MESSAGE);
-        
-        // Abrir el diálogo modal para registrar un componente
-        RegistrarComponente dialogoRegistrarComponente = new RegistrarComponente();
-        dialogoRegistrarComponente.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialogoRegistrarComponente.setVisible(true);
+        // Desactivamos los botones de eliminar
+        btnEliminar.setEnabled(false);
     }
 
     private void eliminarRegistro() {
-        int indiceSeleccionado = listado.getSelectedIndex();
-        if (indiceSeleccionado != -1) {
-            listModel.removeElementAt(indiceSeleccionado);
-            JOptionPane.showMessageDialog(this, "Registro eliminado correctamente", "Eliminar Registro",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un registro para eliminar", "Eliminar Registro",
-                    JOptionPane.WARNING_MESSAGE);
+        if (selectedRowIndex != -1) {
+            // Mensaje de advertencia
+            int option = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar este registro?", "Eliminar Registro", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                // Aquí implementar la lógica para eliminar el registro seleccionado
+                // Por ahora, simplemente mostraremos un mensaje
+                JOptionPane.showMessageDialog(this, "¡Registro eliminado correctamente!", "Eliminar Registro", JOptionPane.INFORMATION_MESSAGE);
+                tableModel.removeRow(selectedRowIndex);
+                selectedRowIndex = -1;
+                btnEliminar.setEnabled(false);
+            }
         }
     }
 
@@ -234,6 +313,9 @@ public class MainFrame extends JFrame {
     }
 
     private void resetearListado() {
-        listModel.clear();
+        tableModel.setColumnCount(0);
+        tableModel.setRowCount(0);
+        selectedRowIndex = -1;
+        btnEliminar.setEnabled(false);
     }
 }
