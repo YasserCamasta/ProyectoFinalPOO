@@ -2,8 +2,10 @@ package visual;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -21,13 +23,13 @@ public class RegistrarCliente extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTextField textFieldNombre;
     private JTextField textFieldDireccion;
-    private JTextField textFieldTelefono;
+    private JFormattedTextField formattedTextFieldTelefono; // Cambiado a JFormattedTextField
 
     /**
      * Create the dialog.
      */
     public RegistrarCliente() {
-    	setTitle("Registro de Cliente");
+        setTitle("Registro de Cliente");
         setBounds(100, 100, 450, 250);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -56,10 +58,15 @@ public class RegistrarCliente extends JDialog {
         contentPanel.add(textFieldDireccion);
         textFieldDireccion.setColumns(10);
 
-        textFieldTelefono = new JTextField();
-        textFieldTelefono.setBounds(130, 100, 250, 26);
-        contentPanel.add(textFieldTelefono);
-        textFieldTelefono.setColumns(10);
+        try {
+            // Utilizar una máscara para el campo de teléfono
+            MaskFormatter formatter = new MaskFormatter("###-###-####");
+            formattedTextFieldTelefono = new JFormattedTextField(formatter);
+            formattedTextFieldTelefono.setBounds(130, 100, 250, 26);
+            contentPanel.add(formattedTextFieldTelefono);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -71,12 +78,19 @@ public class RegistrarCliente extends JDialog {
                 // Obtener los datos ingresados por el usuario
                 String nombre = textFieldNombre.getText().trim();
                 String direccion = textFieldDireccion.getText().trim();
-                String telefono = textFieldTelefono.getText().trim();
+                String telefono = formattedTextFieldTelefono.getText().trim(); // Cambiado a formattedTextFieldTelefono
 
                 // Validar que los campos no estén vacíos
                 if (nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
                     JOptionPane.showMessageDialog(RegistrarCliente.this,
                             "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Verificar si el teléfono tiene la longitud correcta
+                if (telefono.replaceAll("-", "").length() != 10) {
+                    JOptionPane.showMessageDialog(RegistrarCliente.this,
+                            "Por favor, ingrese un número de teléfono válido", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 

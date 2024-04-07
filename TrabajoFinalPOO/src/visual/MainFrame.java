@@ -175,6 +175,15 @@ public class MainFrame extends JFrame {
     private void abrirFormulario(JDialog frame) {
         frame.setVisible(true);
     }
+    // Método para habilitar funcionalidades de administrador
+    public void habilitarFuncionalidadAdmin() {
+        btnEliminar.setEnabled(true); // Habilitar el botón de eliminar
+    }
+
+    // Método para deshabilitar funcionalidades de administrador
+    public void deshabilitarFuncionalidadAdmin() {
+        btnEliminar.setEnabled(false); // Deshabilitar el botón de eliminar
+    }
 
     private void mostrarListadoComponentes() {
         tableModel.setColumnCount(0); // Limpiamos las columnas

@@ -1,25 +1,27 @@
 package logico;
 
-import java.util.ArrayList;
-
 public class Main {
 
     public static void main(String[] args) {
-        // Crear algunos clientes
+        // Crear clientes predeterminados
         Cliente cliente1 = new Cliente("123456789", "Juan Pérez", "Calle 123");
         Cliente cliente2 = new Cliente("987654321", "María González", "Avenida 456");
 
-        // Crear algunos componentes
-        Componente micro1 = new Micro("MS123", "Intel", "i7", "Socket123", 3.2);
-        Componente ram1 = new Ram("RAM123", "Kingston", 8, "DDR4");
-        Componente disco1 = new Disco("DISCO123", "Seagate", "ModeloX", 1000, "SATA");
+        // Agregar clientes al registro de clientes de la tienda
+        Tienda.getInstance().agregarCliente(cliente1);
+        Tienda.getInstance().agregarCliente(cliente2);
 
-        // Agregar los componentes al inventario de la tienda
+        // Crear componentes predeterminados
+        Micro micro1 = new Micro("MS123", "Intel", "i7", "Socket123", 3.2);
+        Ram ram1 = new Ram("RAM123", "Kingston", 8, "DDR4");
+        Disco disco1 = new Disco("DISCO123", "Seagate", "ModeloX", 1000, "SATA");
+
+        // Agregar componentes al inventario de la tienda
         Tienda.getInstance().agregarComponente(micro1);
         Tienda.getInstance().agregarComponente(ram1);
         Tienda.getInstance().agregarComponente(disco1);
 
-        // Crear una factura para el cliente1
+        // Crear una factura para el cliente1 con los componentes predeterminados
         Factura factura1 = new Factura(cliente1);
         factura1.agregarComponente(micro1);
         factura1.agregarComponente(ram1);

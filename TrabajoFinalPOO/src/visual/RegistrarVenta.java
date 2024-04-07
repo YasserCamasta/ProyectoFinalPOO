@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import logico.Cliente;
 import logico.Componente;
@@ -93,8 +94,11 @@ public class RegistrarVenta extends JDialog {
         tableModel.addColumn("Número de Serie");
         tableModel.addColumn("Precio");
         tableModel.addColumn("Marca");
+        tableModel.addColumn(""); // Columna adicional para el botón de eliminar
         tableCarrito = new JTable(tableModel);
         scrollPaneCarrito.setViewportView(tableCarrito);
+        tableCarrito.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+        tableCarrito.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox()));
 
         JLabel lblTotal = new JLabel("Total:");
         lblTotal.setBounds(429, 311, 46, 14);
@@ -161,7 +165,8 @@ public class RegistrarVenta extends JDialog {
         Object[] rowData = {
             componenteSeleccionado.getNumeroSerie(),
             componenteSeleccionado.getPrecio(),
-            componenteSeleccionado.getMarca()
+            componenteSeleccionado.getMarca(),
+            "Eliminar" // Botón para eliminar el componente
         };
         tableModel.addRow(rowData);
 
@@ -246,5 +251,77 @@ public class RegistrarVenta extends JDialog {
         
         RegistrarCliente registrarCliente = new RegistrarCliente();
         registrarCliente.setVisible(true);
+    }
+
+    // Clase interna para renderizar el botón de eliminar en la tabla
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    // Clase interna para manejar el evento del botón de eliminar en la tabla
+    class ButtonEditor extends DefaultCellEditor {
+
+        protected JButton button;
+        private String label;
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Aquí puedes manejar la eliminación del componente del carrito
+                int option = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar este componente del carrito?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    int row = tableCarrito.getSelectedRow();
+                    tableModel.removeRow(row);
+                    componentesSeleccionados.remove(row);
+                    double total = calcularTotal();
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    textFieldTotal.setText("$ " + df.format(total));
+                }
+            }
+            isPushed = false;
+            return new String(label);
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
     }
 }

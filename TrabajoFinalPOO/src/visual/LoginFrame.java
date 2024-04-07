@@ -1,22 +1,17 @@
 package visual;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
 
@@ -85,27 +80,37 @@ public class LoginFrame extends JFrame {
     private void iniciarSesion() {
         String usuario = textUsuario.getText();
         String contraseña = new String(claveAcceso.getPassword());
+        String rolUsuario = ""; // Variable para almacenar el rol del usuario
 
         // Verificación de credenciales
         if (usuario.equals("YasserC") && contraseña.equals("contraseña1")) {
             // Inicio de sesión exitoso para el usuario YasserC
-            JOptionPane.showMessageDialog(LoginFrame.this, "¡Bienvenido, Yasser Camasta!", "Inicio de Sesión Exitoso",
-                    JOptionPane.INFORMATION_MESSAGE);
-            abrirMainFrame();
+            JOptionPane.showMessageDialog(LoginFrame.this, "¡Bienvenido, Yasser Camasta!", "Inicio de Sesión Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            rolUsuario = "administrador"; // Asignar el rol del usuario
         } else if (usuario.equals("MaximoH") && contraseña.equals("contraseña2")) {
             // Inicio de sesión exitoso para el usuario MaximoH
-            JOptionPane.showMessageDialog(LoginFrame.this, "¡Bienvenido, Maximo Herrera!", "Inicio de Sesión Exitoso",
-                    JOptionPane.INFORMATION_MESSAGE);
-            abrirMainFrame();
+            JOptionPane.showMessageDialog(LoginFrame.this, "¡Bienvenido, Maximo Herrera!", "Inicio de Sesión Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            rolUsuario = "usuario"; // Asignar el rol del usuario
         } else {
             // Credenciales inválidas, mostrar mensaje de error
-            JOptionPane.showMessageDialog(LoginFrame.this, "Usuario o contraseña incorrectos",
-                    "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(LoginFrame.this, "Usuario o contraseña incorrectos", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si las credenciales son inválidas
         }
+
+        // Abrir el MainFrame y pasar el rol del usuario
+        abrirMainFrame(rolUsuario);
     }
 
-    private void abrirMainFrame() {
+    private void abrirMainFrame(String rolUsuario) {
         MainFrame mainFrame = new MainFrame();
+
+        // Lógica de manejo de roles
+        if (rolUsuario.equals("administrador")) {
+            mainFrame.habilitarFuncionalidadAdmin(); // Habilitar funcionalidades de administrador
+        } else {
+            mainFrame.deshabilitarFuncionalidadAdmin(); // Deshabilitar funcionalidades de administrador
+        }
+
         mainFrame.setVisible(true);
         dispose(); // Cerrar el frame de inicio de sesión después de abrir el MainFrame
     }
