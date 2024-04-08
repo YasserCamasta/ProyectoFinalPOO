@@ -3,6 +3,27 @@ package visual;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import logico.Cliente;
+import logico.Componente;
+import logico.Factura;
+import logico.Tienda;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -234,9 +255,67 @@ public class RegistrarVenta extends JDialog {
         textAreaFactura.append("\nTotal: $ " + textFieldTotal.getText() + "\n");
         textAreaFactura.setBounds(10, 10, 400, 300);
 
+        // Crear el botón para guardar la factura
+        JButton btnSave = new JButton("Guardar Factura");
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                guardarFacturaComoArchivoTxt(factura);
+            }
+        });
+
+        // Panel para el botón de guardar factura
+        JPanel btnPanel = new JPanel();
+        btnPanel.add(btnSave);
+
+        // Agregar el panel al diálogo emergente
         JScrollPane scrollPaneFactura = new JScrollPane(textAreaFactura);
+        scrollPaneFactura.setColumnHeaderView(btnPanel);
 
         JOptionPane.showMessageDialog(this, scrollPaneFactura, "Factura", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    // Método para guardar la factura como archivo de texto en Eclipse
+    private void guardarFacturaComoArchivoTxt(Factura factura) {
+        try {
+            // Obtener el directorio actual del proyecto en Eclipse
+            String currentDirectory = System.getProperty("user.dir");
+
+            // Crear la ruta relativa para el directorio de facturas
+            String facturaDirectory = currentDirectory + "/facturas";
+
+            // Crear el directorio de facturas si no existe
+            File directory = new File(facturaDirectory);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // Crear el nombre del archivo
+            String fileName = facturaDirectory + "/Factura_" + factura.getNumeroFactura() + ".txt";
+
+            FileWriter fileWriter = new FileWriter(fileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // Escribir la información de la factura en el archivo de texto
+            bufferedWriter.write("Factura #" + factura.getNumeroFactura() + "\n");
+            bufferedWriter.write("Cliente: " + factura.getCliente().getNombre() + "\n");
+            bufferedWriter.write("Componentes:\n");
+            factura.getComponentes().forEach(componente -> {
+                try {
+                    bufferedWriter.write(componente.obtenerDetalles() + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            bufferedWriter.write("Total:" + calcularTotal() + "\n");
+
+            bufferedWriter.close();
+
+            JOptionPane.showMessageDialog(this, "Factura guardada correctamente como archivo de texto en Eclipse.", "Guardar Factura",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar la factura como archivo de texto: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Método para volver al menú principal
