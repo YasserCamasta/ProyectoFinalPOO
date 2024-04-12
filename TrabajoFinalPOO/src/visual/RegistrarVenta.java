@@ -4,23 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
-import logico.Cliente;
-import logico.Componente;
-import logico.Factura;
-import logico.Tienda;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -69,6 +52,8 @@ public class RegistrarVenta extends JDialog {
      * Create the dialog.
      */
     public RegistrarVenta() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yasser\\Downloads\\pngfind.com-technology-icon-png-2158883.png"));
+    	setResizable(false);
         setTitle("Registrar Venta");
         setBounds(100, 100, 708, 468);
         getContentPane().setLayout(new BorderLayout());
@@ -104,7 +89,7 @@ public class RegistrarVenta extends JDialog {
         contentPanel.add(btnAñadirAlCarrito);
 
         lblCantidadComponentes = new JLabel("Cantidad de Componentes:");
-        lblCantidadComponentes.setBounds(10, 73, 150, 14);
+        lblCantidadComponentes.setBounds(10, 73, 193, 14);
         contentPanel.add(lblCantidadComponentes);
 
         JScrollPane scrollPaneCarrito = new JScrollPane();
@@ -306,18 +291,17 @@ public class RegistrarVenta extends JDialog {
                     e.printStackTrace();
                 }
             });
-            bufferedWriter.write("Total:" + calcularTotal() + "\n");
+            bufferedWriter.write("Total: $" + calcularTotal() + "\n");
 
             bufferedWriter.close();
 
-            JOptionPane.showMessageDialog(this, "Factura guardada correctamente como archivo de texto en Eclipse.", "Guardar Factura",
+            JOptionPane.showMessageDialog(this, "Factura guardada correctamente como archivo de texto.", "Guardar Factura",
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error al guardar la factura como archivo de texto: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
     // Método para volver al menú principal
     private void volverMenuPrincipal() {
         dispose(); // Cierra la ventana actual

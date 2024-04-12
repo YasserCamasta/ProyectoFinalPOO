@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 
 import logico.Cliente;
 import logico.Tienda;
+import java.awt.Toolkit;
 
 public class RegistrarCliente extends JDialog {
 
@@ -29,6 +30,8 @@ public class RegistrarCliente extends JDialog {
      * Create the dialog.
      */
     public RegistrarCliente() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yasser\\Downloads\\pngfind.com-technology-icon-png-2158883.png"));
+    	setResizable(false);
         setTitle("Registro de Cliente");
         setBounds(100, 100, 450, 250);
         getContentPane().setLayout(new BorderLayout());

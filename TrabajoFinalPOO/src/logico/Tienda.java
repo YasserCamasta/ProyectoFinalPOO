@@ -44,19 +44,19 @@ public class Tienda {
         combos.add(combo);
     }
 
-    // Método para generar una factura a partir de una lista de componentes
+    // Generar una factura a partir de una lista de componentes
     public Factura generarFactura(Cliente cliente, List<Componente> componentes) {
         Factura factura = new Factura(cliente, componentes);
         facturas.add(factura);
         return factura;
     }
 
-    // Método para contar la cantidad de componentes disponibles en el inventario
+    // Contar la cantidad de componentes disponibles en el inventario
     public int contarComponentesDisponibles() {
         return inventario.size();
     }
 
-    // Método para buscar componentes por marca
+    // buscar componentes por marca
     public List<Componente> buscarComponentesPorMarca(String marca) {
         List<Componente> componentesPorMarca = new ArrayList<>();
         for (Componente componente : inventario) {
@@ -67,17 +67,17 @@ public class Tienda {
         return componentesPorMarca;
     }
 
-    // Método para ordenar componentes por precio
+    // ordenar componentes por precio
     public List<Componente> ordenarComponentesPorPrecio() {
         List<Componente> inventarioOrdenado = new ArrayList<>(inventario);
         inventarioOrdenado.sort((c1, c2) -> Double.compare(c1.getPrecio(), c2.getPrecio()));
         return inventarioOrdenado;
     }
 
-    // Método para verificar la compatibilidad entre los componentes de un combo
+    // verificar la compatibilidad entre los componentes de un combo
     public boolean verificarCompatibilidad(Motherboard motherboard, Ram ram, Disco disco) {
-        // Aquí puedes implementar la lógica de compatibilidad como lo desees
-        // Por ahora, simplemente retornaremos true para evitar errores
+        // Aquí se debe implementar la lógica de compatibilidad, por ahora solo retorna true
+        // 
         return true;
     }
     public Cliente buscarClientePorNombre(String nombreCliente) {

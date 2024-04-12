@@ -12,7 +12,7 @@ public abstract class Componente {
         this.numeroSerie = numeroSerie;
         this.precio = 0;
         this.marca = marca;
-        this.cantidadDisponible = 0; // Inicializamos la cantidad disponible a 0
+        this.cantidadDisponible = 1; // Inicializamos la cantidad disponible a 0
     }
 
     public String getNumeroSerie() {

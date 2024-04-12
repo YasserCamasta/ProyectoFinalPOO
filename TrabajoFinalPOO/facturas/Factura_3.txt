@@ -1,0 +1,10 @@
+Factura #3
+Cliente: Yasser
+Componentes:
+Memoria RAM: Nvidia, Capacidad: 16 GB, Tipo: 
+Memoria RAM: Nvidia, Capacidad: 16 GB, Tipo: 
+Memoria RAM: Nvidia, Capacidad: 16 GB, Tipo: 
+Memoria RAM: Nvidia, Capacidad: 16 GB, Tipo: 
+Memoria RAM: Nvidia, Capacidad: 16 GB, Tipo: 
+Memoria RAM: Nvidia, Capacidad: 16 GB, Tipo: 
+Total: $12000.0

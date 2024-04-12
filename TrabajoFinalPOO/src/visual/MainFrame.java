@@ -32,6 +32,7 @@ import logico.Motherboard;
 import logico.Disco;
 import logico.Micro;
 import logico.Ram;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame {
 
@@ -62,6 +63,7 @@ public class MainFrame extends JFrame {
      * Create the frame.
      */
     public MainFrame() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yasser\\Downloads\\pngfind.com-technology-icon-png-2158883.png"));
         setTitle("Menú Principal");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -195,10 +197,10 @@ public class MainFrame extends JFrame {
         tableModel.addColumn("Cantidad Disponible");
         tableModel.addColumn("Marca");
 
-        // Obtenemos la lista de componentes del inventario de la tienda
+        // oobtenemos la lista de componentes del inventario de la tienda
         ArrayList<Componente> componentes = Tienda.getInstance().getInventario();
 
-        // Iteramos sobre la lista de componentes y agregamos los datos a la tabla
+        // agregamos los datos a la tabla
         for (Componente componente : componentes) {
             if (componente instanceof Disco) {
                 rowData = new Object[]{
@@ -307,8 +309,7 @@ public class MainFrame extends JFrame {
             // Mensaje de advertencia
             int option = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar este registro?", "Eliminar Registro", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
-                // Aquí implementar la lógica para eliminar el registro seleccionado
-                // Por ahora, simplemente mostraremos un mensaje
+                
                 JOptionPane.showMessageDialog(this, "¡Registro eliminado correctamente!", "Eliminar Registro", JOptionPane.INFORMATION_MESSAGE);
                 tableModel.removeRow(selectedRowIndex);
                 selectedRowIndex = -1;

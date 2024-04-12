@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 
 public class LoginFrame extends JFrame {
 
@@ -38,7 +39,10 @@ public class LoginFrame extends JFrame {
     /**
      * Create the frame.
      */
+    
+    
     public LoginFrame() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yasser\\Downloads\\pngfind.com-technology-icon-png-2158883.png"));
         setTitle("Inicio de Sesión");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,6 +52,8 @@ public class LoginFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
+        
+    
         JLabel lblUsuario = new JLabel("Usuario:");
         lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblUsuario.setBounds(54, 72, 80, 25);

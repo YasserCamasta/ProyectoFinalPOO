@@ -1,7 +1,0 @@
-Factura #1
-Cliente: Yasser
-Componentes:
-Disco Duro: Samsung, Modelo: D23, Capacidad: 1000.0 GB, Tipo de Conexión: SATA
-Disco Duro: Samsung, Modelo: D23, Capacidad: 1000.0 GB, Tipo de Conexión: SATA
-Disco Duro: Samsung, Modelo: D23, Capacidad: 1000.0 GB, Tipo de Conexión: SATA
-Total: $6000.0

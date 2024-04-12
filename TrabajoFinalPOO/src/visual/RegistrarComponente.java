@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Toolkit;
 
 public class RegistrarComponente extends JDialog {
 
@@ -35,6 +36,8 @@ public class RegistrarComponente extends JDialog {
      * Create the dialog.
      */
     public RegistrarComponente() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yasser\\Downloads\\pngfind.com-technology-icon-png-2158883.png"));
+    	setResizable(false);
         setBounds(100, 100, 450, 400);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

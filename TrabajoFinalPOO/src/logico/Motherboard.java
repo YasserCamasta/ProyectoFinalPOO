@@ -49,12 +49,12 @@ public class Motherboard extends Componente {
         this.conexionesDiscos = conexionesDiscos;
     }
 
-    // Método para verificar si la motherboard es compatible con una RAM dada
+    // verificar si la motherboard es compatible con una RAM dada
     public boolean esCompatibleConRAM(Ram ram) {
         return this.tipoMemoriaRAM.equals(ram.getTipo());
     }
 
-    // Método para verificar si la motherboard tiene conexión para un disco dado
+    // verificar si la motherboard tiene conexión para un disco dado
     public boolean tieneConexionParaDisco(Disco disco) {
         return this.conexionesDiscos.contains(disco.getTipoConexion());
     }

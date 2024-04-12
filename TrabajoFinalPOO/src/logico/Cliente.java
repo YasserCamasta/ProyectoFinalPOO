@@ -45,7 +45,7 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    // Método para obtener la lista de componentes que ha comprado este cliente en sus facturas
+    // obtener la lista de componentes que ha comprado este cliente en sus facturas
     public ArrayList<Componente> obtenerComponentesComprados() {
         ArrayList<Componente> componentesComprados = new ArrayList<>();
         for (Factura factura : Tienda.getInstance().getFacturas()) {
